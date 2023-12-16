@@ -1,0 +1,34 @@
+<!-- myblog/templates/myblog/post_detail.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>{{ post.title }}</h1>
+  <p>{{ post.content }}</p>
+  <p>Author: {{ post.author.username }}</p>
+  <p>Created at: {{ post.created_at }}</p>
+  
+  <!-- Display comments -->
+  <h2>Comments</h2>
+  {% for comment in comments %}
+    <p>{{ comment.text }} - {{ comment.user.username }} - {{ comment.created_at }}</p>
+  {% endfor %}
+  
+  <!-- Display average rating -->
+  <p>Average Rating: {{ rating|default:"No ratings yet" }}</p>
+
+  <!-- Add comment form -->
+  <form method="post" action="{% url 'add_comment' post_id=post.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Add Comment</button>
+  </form>
+
+  <!-- Add rating form -->
+  <form method="post" action="{% url 'rate_post' post_id=post.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Rate</button>
+  </form>
+
+{% endblock %}

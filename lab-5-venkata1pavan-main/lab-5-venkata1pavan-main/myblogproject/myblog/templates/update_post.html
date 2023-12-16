@@ -1,0 +1,12 @@
+<!-- myblog/templates/myblog/update_post.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+  <h1>Edit Blog Post</h1>
+  <form method="post" action="{% url 'update_post' post_id=post.id %}">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update Post</button>
+  </form>
+{% endblock %}
